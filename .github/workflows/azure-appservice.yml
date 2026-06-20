@@ -17,18 +17,13 @@ jobs:
         run: |
           cp server.js public/server.js
           echo '{"name":"focussound","version":"1.0.0","scripts":{"start":"node server.js"}}' > public/package.json
-          cd public && zip -r ../deploy.zip .
 
-      - name: Azure Login
-        uses: azure/login@v2
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      - name: Deploy to Azure App Service
-        run: |
-          az webapp deploy \
-            --name focussound \
-            --resource-group rg-lipcoding-dev \
-            --src-path deploy.zip \
-            --type zip \
-            --async true
+          server: waws-prod-hk1-037.ftp.azurewebsites.windows.net
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./public/
+          server-dir: /site/wwwroot/
+          protocol: ftps
