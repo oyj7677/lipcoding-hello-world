@@ -1,0 +1,34 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build static site",
+      "type": "shell",
+      "command": "npm run build",
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Azure: login",
+      "type": "shell",
+      "command": "azd auth login",
+      "problemMatcher": []
+    },
+    {
+      "label": "Azure: provision and deploy",
+      "type": "shell",
+      "command": "azd up",
+      "dependsOn": "Build static site",
+      "dependsOrder": "sequence",
+      "problemMatcher": []
+    },
+    {
+      "label": "Azure: deploy app only",
+      "type": "shell",
+      "command": "azd deploy",
+      "dependsOn": "Build static site",
+      "dependsOrder": "sequence",
+      "problemMatcher": []
+    }
+  ]
+}

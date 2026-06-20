@@ -1,0 +1,10 @@
+name: lipcoding-static-calculator
+metadata:
+  template: azd-init@1.25.6
+
+services:
+  web:
+    project: .
+    language: js
+    host: staticwebapp
+    dist: public
