@@ -17,10 +17,18 @@ jobs:
         run: |
           cp server.js public/server.js
           echo '{"name":"focussound","version":"1.0.0","scripts":{"start":"node server.js"}}' > public/package.json
+          cd public && zip -r ../deploy.zip .
+
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Deploy to Azure App Service
-        uses: azure/webapps-deploy@v3
-        with:
-          app-name: focussound
-          publish-profile: ${{ secrets.AZURE_APPSERVICE_PUBLISH_PROFILE }}
-          package: public
+        run: |
+          az webapp deploy \
+            --name focussound \
+            --resource-group rg-lipcoding-dev \
+            --src-path deploy.zip \
+            --type zip \
+            --async true
