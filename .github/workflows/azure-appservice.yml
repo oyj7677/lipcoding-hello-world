@@ -1,0 +1,26 @@
+name: Deploy to Azure App Service
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build
+        run: npm run build
+
+      - name: Prepare App Service package
+        run: |
+          cp server.js public/server.js
+          echo '{"name":"focussound","version":"1.0.0","scripts":{"start":"node server.js"}}' > public/package.json
+
+      - name: Deploy to Azure App Service
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: focussound
+          publish-profile: ${{ secrets.AZURE_APPSERVICE_PUBLISH_PROFILE }}
+          package: public
