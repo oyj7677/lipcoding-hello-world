@@ -34,6 +34,7 @@ Common skill triggers:
 - For this root-level static site, use `npm run build` to copy deployable assets into `public/`.
 - Do not put generated build output in source edits. `public/` is ignored.
 - Validate changes with `npm run build` before deployment.
+- **Do NOT push or deploy automatically.** After building and testing, wait for the user to explicitly say "배포해줘" before running `git push` or `azd deploy`.
 
 ## Azure Deployment Rule
 

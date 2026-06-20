@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "node scripts/build-static-site.mjs",
+    "start": "node server.js",
     "preview": "npx --yes serve public",
     "azure:up": "azd up",
     "azure:deploy": "azd deploy"
